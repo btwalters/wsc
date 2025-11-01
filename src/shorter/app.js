@@ -480,8 +480,9 @@ async function toggleReference(refItem, reference) {
 
 // ===== TEXT-TO-SPEECH =====
 
-function speak(text) {
-    if ('speechSynthesis' in window && soundEnabled) {
+// Manual speak function (always works, for play buttons)
+function speakAlways(text) {
+    if ('speechSynthesis' in window) {
         // Cancel any ongoing speech
         window.speechSynthesis.cancel();
 
@@ -503,6 +504,13 @@ function speak(text) {
                 console.error('Error speaking text:', error);
             }
         }, 100);
+    }
+}
+
+// Auto-speak function (respects soundEnabled toggle)
+function speak(text) {
+    if (soundEnabled) {
+        speakAlways(text);
     }
 }
 
@@ -543,12 +551,12 @@ fcRandomBtn.addEventListener('click', randomFlashcard);
 fcShuffleBtn.addEventListener('click', shuffleFlashcards);
 fcRestartBtn.addEventListener('click', restartFlashcards);
 
-// Play button controls
+// Play button controls (always work, independent of toggle)
 playFrontBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     if (selectedQuestions.length > 0) {
         const question = questions.find(q => q.id === selectedQuestions[currentFlashcardIndex]);
-        if (question) speak(question.question);
+        if (question) speakAlways(question.question);
     }
 });
 
@@ -556,7 +564,7 @@ playBackBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     if (selectedQuestions.length > 0) {
         const question = questions.find(q => q.id === selectedQuestions[currentFlashcardIndex]);
-        if (question) speak(question.answer);
+        if (question) speakAlways(question.answer);
     }
 });
 
