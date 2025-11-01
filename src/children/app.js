@@ -111,9 +111,9 @@ function displayQuestion() {
     progressBar.style.width = percentage + '%';
     progressText.textContent = `Question ${question.id} (${currentIndex + 1} of ${questions.length})`;
 
-    // Reset flip state
+    // Reset flip state (without speaking)
     if (isFlipped) {
-        flipCard();
+        flipCard(true); // Pass true to indicate silent flip
     }
 
     // Auto-speak question when displayed if enabled
@@ -131,12 +131,12 @@ function displayQuestion() {
 }
 
 // Flip card
-function flipCard() {
+function flipCard(silent = false) {
     isFlipped = !isFlipped;
     flashcard.classList.toggle('flipped');
 
-    // Auto-speak when flipped if enabled
-    if (autoSpeak && soundEnabled) {
+    // Auto-speak when flipped if enabled (unless silent flip for reset)
+    if (autoSpeak && soundEnabled && !silent) {
         if (isFlipped) {
             speak(questions[currentIndex].answer);
         } else {
