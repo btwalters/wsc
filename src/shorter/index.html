@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Westminster Shorter Catechism</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <a href="../index.html" class="back-button" aria-label="Back to home">← Home</a>
+            <h1>Westminster Shorter Catechism</h1>
+            <div class="header-controls">
+                <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">🔊</button>
+            </div>
+        </header>
+
+        <!-- Mode Selector -->
+        <div class="mode-selector">
+            <button class="mode-btn active" id="flashcardModeBtn" data-mode="flashcard">
+                🎴 Flashcard Mode
+            </button>
+            <button class="mode-btn" id="learningModeBtn" data-mode="learning">
+                📖 Learning Mode
+            </button>
+        </div>
+
+        <!-- Flashcard Mode -->
+        <div class="flashcard-mode mode-content active" id="flashcardMode">
+            <!-- Question Selection -->
+            <div class="question-selector">
+                <div class="selector-header">
+                    <h3>Select Questions</h3>
+                    <div class="selector-actions">
+                        <button class="selector-btn" id="selectAllBtn">Select All</button>
+                        <button class="selector-btn" id="clearAllBtn">Clear All</button>
+                        <button class="selector-btn" id="rangeBtn">Range...</button>
+                    </div>
+                </div>
+                <div class="selected-info" id="selectedInfo">0 questions selected</div>
+            </div>
+
+            <!-- Range Selection Modal -->
+            <div class="modal hidden" id="rangeModal">
+                <div class="modal-content">
+                    <h3>Select Question Range</h3>
+                    <div class="range-inputs">
+                        <label>
+                            From: <input type="number" id="rangeFrom" min="1" max="107" value="1">
+                        </label>
+                        <label>
+                            To: <input type="number" id="rangeTo" min="1" max="107" value="107">
+                        </label>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="modal-btn" id="rangeApplyBtn">Apply</button>
+                        <button class="modal-btn secondary" id="rangeCancelBtn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flashcard Display -->
+            <div class="flashcard-container">
+                <div class="progress-info" id="flashcardProgress">Question 1 of 0</div>
+
+                <div class="flashcard" id="flashcard">
+                    <div class="flashcard-face flashcard-front">
+                        <div class="card-label">Question</div>
+                        <div class="card-number" id="cardNumber">Q1</div>
+                        <div class="card-text" id="cardQuestion">Select questions to begin</div>
+                        <div class="tap-hint">Click to reveal answer</div>
+                    </div>
+                    <div class="flashcard-face flashcard-back">
+                        <div class="card-label">Answer</div>
+                        <div class="card-text" id="cardAnswer">Answer</div>
+                        <div class="references" id="cardReferences"></div>
+                        <div class="tap-hint">Click to see question</div>
+                    </div>
+                </div>
+
+                <div class="flashcard-controls">
+                    <button class="fc-btn" id="fcPrevBtn">← Previous</button>
+                    <button class="fc-btn primary" id="fcFlipBtn">Flip Card</button>
+                    <button class="fc-btn" id="fcNextBtn">Next →</button>
+                </div>
+
+                <div class="flashcard-extra">
+                    <button class="fc-extra-btn" id="fcRandomBtn">🎲 Random</button>
+                    <button class="fc-extra-btn" id="fcShuffleBtn">🔀 Shuffle</button>
+                    <button class="fc-extra-btn" id="fcRestartBtn">↺ Restart</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Mode -->
+        <div class="learning-mode mode-content" id="learningMode">
+            <div class="learning-container">
+                <!-- Sidebar -->
+                <aside class="sidebar" id="sidebar">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search questions..." aria-label="Search questions">
+                    </div>
+                    <div class="question-list" id="questionList">
+                        <!-- Questions will be dynamically loaded -->
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="main-content">
+                    <div class="content-wrapper" id="contentWrapper">
+                        <div class="question-header">
+                            <span class="question-number" id="learningQuestionNumber">Q1</span>
+                            <h2 class="question-title" id="learningQuestion">Select a question from the sidebar</h2>
+                        </div>
+                        <div class="answer-section">
+                            <h3 class="section-title">Answer</h3>
+                            <p class="answer-text" id="learningAnswer">The answer will appear here</p>
+                        </div>
+                        <div class="references-section" id="referencesSection">
+                            <h3 class="section-title">Scripture References</h3>
+                            <div class="reference-list" id="referenceList">
+                                <!-- References will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+
+            <!-- Mobile Toggle for Sidebar -->
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                ☰
+            </button>
+        </div>
+
+        <!-- Tooltip for references -->
+        <div class="tooltip hidden" id="tooltip"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

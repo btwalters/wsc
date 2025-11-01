@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catechism Learning Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .card-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-info {
+            font-size: 0.9rem;
+            color: #999;
+            font-style: italic;
+        }
+
+        .children-card {
+            border-top: 5px solid #4CAF50;
+        }
+
+        .children-card .card-title {
+            color: #4CAF50;
+        }
+
+        .shorter-card {
+            border-top: 5px solid #37474F;
+        }
+
+        .shorter-card .card-title {
+            color: #37474F;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .card {
+                padding: 30px 20px;
+            }
+
+            .card-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Catechism Learning Center</h1>
+            <p class="subtitle">Interactive tools for learning and memorizing catechism questions and answers</p>
+        </header>
+
+        <div class="cards-container">
+            <a href="./children/index.html" class="card children-card">
+                <div class="card-icon">🎨</div>
+                <h2 class="card-title">Children's Catechism</h2>
+                <p class="card-description">
+                    A fun, interactive flashcard game designed for kids to learn the fundamentals of faith through simple questions and answers.
+                </p>
+                <p class="card-info">145 questions • Kid-friendly design • Audio playback</p>
+            </a>
+
+            <a href="./shorter/index.html" class="card shorter-card">
+                <div class="card-icon">📖</div>
+                <h2 class="card-title">Shorter Catechism</h2>
+                <p class="card-description">
+                    An advanced study tool for learning the Westminster Shorter Catechism with scripture references and proof texts.
+                </p>
+                <p class="card-info">107 questions • Scripture references • Study mode</p>
+            </a>
+        </div>
+
+        <footer>
+            <p>Built for faithful learning and spiritual growth</p>
+        </footer>
+    </div>
+</body>
+</html>

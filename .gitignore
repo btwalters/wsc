@@ -1,0 +1,12 @@
+node_modules/
+.DS_Store
+*.log
+.env
+dist/
+.vscode/
+*.pdf
+.idea/
+Thumbs.db
+examine_pdf.py
+extract_childrens.py
+extract_shorter.py

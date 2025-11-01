@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Children's Catechism Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <a href="../index.html" class="back-button" aria-label="Back to home">← Home</a>
+            <h1>Children's Catechism</h1>
+            <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">🔊</button>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+            <div class="progress-text" id="progressText">Question 1 of 145</div>
+        </div>
+
+        <!-- Card Container -->
+        <div class="card-container">
+            <div class="card" id="flashcard">
+                <div class="card-face card-front">
+                    <div class="card-label">Question</div>
+                    <div class="card-content" id="questionText">Loading...</div>
+                    <div class="tap-hint">Tap to see answer</div>
+                </div>
+                <div class="card-face card-back">
+                    <div class="card-label">Answer</div>
+                    <div class="card-content" id="answerText">Answer</div>
+                    <div class="tap-hint">Tap to see question</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Controls -->
+        <div class="controls">
+            <button class="control-btn prev-btn" id="prevBtn" aria-label="Previous question">
+                <span class="btn-icon">←</span>
+                <span class="btn-text">Previous</span>
+            </button>
+
+            <button class="control-btn flip-btn" id="flipBtn" aria-label="Flip card">
+                <span class="btn-icon">🔄</span>
+                <span class="btn-text">Flip</span>
+            </button>
+
+            <button class="control-btn next-btn" id="nextBtn" aria-label="Next question">
+                <span class="btn-text">Next</span>
+                <span class="btn-icon">→</span>
+            </button>
+        </div>
+
+        <!-- Additional Controls -->
+        <div class="extra-controls">
+            <button class="extra-btn" id="randomBtn" aria-label="Random question">
+                <span>🎲 Random</span>
+            </button>
+            <button class="extra-btn" id="restartBtn" aria-label="Restart from beginning">
+                <span>↺ Restart</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Celebration Confetti Container -->
+    <div id="confetti" class="confetti-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
