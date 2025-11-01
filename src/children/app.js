@@ -3,8 +3,7 @@ let allQuestions = [];
 let questions = []; // Currently active questions (all or range)
 let currentIndex = 0;
 let isFlipped = false;
-let soundEnabled = true; // Default ON for children
-let autoSpeak = true; // Auto-speak on flip
+let autoSpeak = true; // Auto-speak on flip (default ON for children)
 
 // DOM Elements
 const flashcard = document.getElementById('flashcard');
@@ -117,7 +116,7 @@ function displayQuestion() {
     }
 
     // Auto-speak question when displayed if enabled
-    if (autoSpeak && soundEnabled) {
+    if (autoSpeak) {
         speak(question.question);
     }
 
@@ -136,7 +135,7 @@ function flipCard(silent = false) {
     flashcard.classList.toggle('flipped');
 
     // Auto-speak when flipped if enabled (unless silent flip for reset)
-    if (autoSpeak && soundEnabled && !silent) {
+    if (autoSpeak && !silent) {
         if (isFlipped) {
             speak(questions[currentIndex].answer);
         } else {
@@ -147,7 +146,7 @@ function flipCard(silent = false) {
 
 // Text-to-speech
 function speak(text) {
-    if ('speechSynthesis' in window && soundEnabled) {
+    if ('speechSynthesis' in window) {
         // Cancel any ongoing speech
         window.speechSynthesis.cancel();
 
