@@ -116,6 +116,11 @@ function displayQuestion() {
         flipCard();
     }
 
+    // Auto-speak question when displayed if enabled
+    if (autoSpeak && soundEnabled) {
+        speak(question.question);
+    }
+
     // Save progress
     localStorage.setItem('childrenCatechismIndex', currentIndex);
 
@@ -255,10 +260,6 @@ function showConfetti() {
 
 // Event Listeners
 flashcard.addEventListener('click', flipCard);
-flipBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    flipCard();
-});
 nextBtn.addEventListener('click', nextQuestion);
 prevBtn.addEventListener('click', prevQuestion);
 randomBtn.addEventListener('click', randomQuestion);

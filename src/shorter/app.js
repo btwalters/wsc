@@ -33,7 +33,6 @@ const flashcardProgress = document.getElementById('flashcardProgress');
 
 const fcPrevBtn = document.getElementById('fcPrevBtn');
 const fcNextBtn = document.getElementById('fcNextBtn');
-const fcFlipBtn = document.getElementById('fcFlipBtn');
 const fcRandomBtn = document.getElementById('fcRandomBtn');
 const fcShuffleBtn = document.getElementById('fcShuffleBtn');
 const fcRestartBtn = document.getElementById('fcRestartBtn');
@@ -538,10 +537,6 @@ rangeCancelBtn.addEventListener('click', hideRangeModal);
 rangeApplyBtn.addEventListener('click', applyRange);
 
 flashcard.addEventListener('click', flipFlashcard);
-fcFlipBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    flipFlashcard();
-});
 fcNextBtn.addEventListener('click', nextFlashcard);
 fcPrevBtn.addEventListener('click', prevFlashcard);
 fcRandomBtn.addEventListener('click', randomFlashcard);
