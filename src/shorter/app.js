@@ -490,7 +490,7 @@ function speakAlways(text) {
         setTimeout(() => {
             try {
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.9;
+                utterance.rate = 1.1;
                 utterance.pitch = 1.0;
                 utterance.volume = 1.0;
 
