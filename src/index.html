@@ -33,19 +33,6 @@
             color: white;
         }
 
-        .header-image {
-            margin-bottom: 30px;
-        }
-
-        .header-image img {
-            max-width: 600px;
-            width: 100%;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 3px solid rgba(255,255,255,0.2);
-        }
-
         h1 {
             font-size: 3rem;
             margin-bottom: 15px;
@@ -123,6 +110,20 @@
             color: #37474F;
         }
 
+        .image-section {
+            text-align: center;
+            margin: 40px 0 30px 0;
+        }
+
+        .image-section img {
+            max-width: 600px;
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255,255,255,0.2);
+        }
+
         footer {
             text-align: center;
             color: white;
@@ -131,7 +132,7 @@
         }
 
         @media (max-width: 768px) {
-            .header-image img {
+            .image-section img {
                 max-width: 100%;
                 border-radius: 10px;
             }
@@ -157,9 +158,6 @@
 <body>
     <div class="container">
         <header>
-            <div class="header-image">
-                <img src="Westminster_Shorter_Catechism.jpg" alt="Westminster Shorter Catechism historic page" />
-            </div>
             <h1>Catechism Learning Center</h1>
             <p class="subtitle">Interactive tools for learning and memorizing catechism questions and answers</p>
         </header>
@@ -168,20 +166,18 @@
             <a href="./children/index.html" class="card children-card">
                 <div class="card-icon">🎨</div>
                 <h2 class="card-title">Children's Catechism</h2>
-                <p class="card-description">
-                    Interactive flashcard game for learning the fundamentals of faith through simple questions and answers.
-                </p>
                 <p class="card-info">144 questions • Audio playback</p>
             </a>
 
             <a href="./shorter/index.html" class="card shorter-card">
                 <div class="card-icon">📖</div>
                 <h2 class="card-title">Shorter Catechism</h2>
-                <p class="card-description">
-                    Helpful links: <a href="https://opc.org/confessions.html" target="_blank" rel="noopener noreferrer" style="color: #37474F; text-decoration: underline;">OPC</a>, <a href="https://www.pcaac.org/bco/westminster-confession/" target="_blank" rel="noopener noreferrer" style="color: #37474F; text-decoration: underline;">PCA</a>
-                </p>
                 <p class="card-info">107 questions • Limited scripture proofs • Expandable verses</p>
             </a>
+        </div>
+
+        <div class="image-section">
+            <img src="Westminster_Shorter_Catechism.jpg" alt="Westminster Shorter Catechism historic page" />
         </div>
 
         <footer>
@@ -190,6 +186,11 @@
                 <a href="https://thewestminsterstandard.org/westminster-shorter-catechism/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline;">Shorter Catechism</a> •
                 <a href="https://reformed.org/historic-confessions/the-childrens-catechism/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline;">Children's Catechism</a> •
                 <a href="https://archive.org/details/shortercatechis00west/page/n10/mode/1up" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline;">Image</a>
+            </p>
+            <p style="font-size: 0.85rem; margin-top: 10px;">
+                Helpful links:
+                <a href="https://opc.org/confessions.html" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline;">OPC</a> •
+                <a href="https://www.pcaac.org/bco/westminster-confession/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline;">PCA</a>
             </p>
         </footer>
     </div>
