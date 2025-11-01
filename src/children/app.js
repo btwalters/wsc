@@ -4,6 +4,7 @@ let questions = []; // Currently active questions (all or range)
 let currentIndex = 0;
 let isFlipped = false;
 let autoSpeak = true; // Auto-speak on flip (default ON for children)
+let speechInitialized = false; // Track if speech has been initialized
 
 // DOM Elements
 const flashcard = document.getElementById('flashcard');
@@ -144,9 +145,25 @@ function flipCard(silent = false) {
     }
 }
 
+// Initialize speech synthesis (required for desktop browsers)
+function initializeSpeech() {
+    if ('speechSynthesis' in window && !speechInitialized) {
+        // Speak an empty string to initialize the speech engine
+        const utterance = new SpeechSynthesisUtterance('');
+        utterance.volume = 0;
+        window.speechSynthesis.speak(utterance);
+        speechInitialized = true;
+    }
+}
+
 // Text-to-speech
 function speak(text) {
     if ('speechSynthesis' in window) {
+        // Initialize speech if not already done
+        if (!speechInitialized) {
+            initializeSpeech();
+        }
+
         // Cancel any ongoing speech
         window.speechSynthesis.cancel();
 
@@ -259,12 +276,30 @@ function showConfetti() {
 }
 
 // Event Listeners
-flashcard.addEventListener('click', flipCard);
-nextBtn.addEventListener('click', nextQuestion);
-prevBtn.addEventListener('click', prevQuestion);
-randomBtn.addEventListener('click', randomQuestion);
-restartBtn.addEventListener('click', restart);
-soundToggle.addEventListener('change', toggleSound);
+flashcard.addEventListener('click', () => {
+    initializeSpeech(); // Initialize on first click
+    flipCard();
+});
+nextBtn.addEventListener('click', () => {
+    initializeSpeech(); // Initialize on first click
+    nextQuestion();
+});
+prevBtn.addEventListener('click', () => {
+    initializeSpeech(); // Initialize on first click
+    prevQuestion();
+});
+randomBtn.addEventListener('click', () => {
+    initializeSpeech(); // Initialize on first click
+    randomQuestion();
+});
+restartBtn.addEventListener('click', () => {
+    initializeSpeech(); // Initialize on first click
+    restart();
+});
+soundToggle.addEventListener('change', () => {
+    initializeSpeech(); // Initialize on first interaction
+    toggleSound();
+});
 
 // Range selection listeners
 allQuestionsBtn.addEventListener('click', selectAllQuestions);
