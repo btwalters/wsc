@@ -108,7 +108,7 @@ function displayQuestion() {
     // Update progress
     const percentage = ((currentIndex + 1) / questions.length) * 100;
     progressBar.style.width = percentage + '%';
-    progressText.textContent = `Question ${currentIndex + 1} of ${questions.length}`;
+    progressText.textContent = `Question ${question.id} (${currentIndex + 1} of ${questions.length})`;
 
     // Reset flip state
     if (isFlipped) {
@@ -117,11 +117,6 @@ function displayQuestion() {
 
     // Save progress
     localStorage.setItem('childrenCatechismIndex', currentIndex);
-
-    // Speak question if sound enabled
-    if (soundEnabled) {
-        speak(question.question);
-    }
 
     // Check for milestone (every 10 questions)
     if ((currentIndex + 1) % 10 === 0 && currentIndex > 0) {
@@ -134,11 +129,13 @@ function flipCard() {
     isFlipped = !isFlipped;
     flashcard.classList.toggle('flipped');
 
-    // Speak answer when flipped to back
-    if (isFlipped && soundEnabled) {
-        speak(questions[currentIndex].answer);
-    } else if (!isFlipped && soundEnabled) {
-        speak(questions[currentIndex].question);
+    // Speak answer when flipped to back, question when flipped to front
+    if (soundEnabled) {
+        if (isFlipped) {
+            speak(questions[currentIndex].answer);
+        } else {
+            speak(questions[currentIndex].question);
+        }
     }
 }
 
