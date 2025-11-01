@@ -4,7 +4,7 @@ let selectedQuestions = [];
 let currentFlashcardIndex = 0;
 let currentLearningQuestionId = 1;
 let isFlipped = false;
-let soundEnabled = true;
+let soundEnabled = false; // Default OFF for adults
 let currentMode = 'flashcard';
 
 // DOM Elements
@@ -108,8 +108,8 @@ function loadSavedState() {
     const savedSoundEnabled = localStorage.getItem('shorterCatechismSoundEnabled');
     if (savedSoundEnabled !== null) {
         soundEnabled = savedSoundEnabled === 'true';
-        soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
     }
+    soundToggle.checked = soundEnabled;
 }
 
 // ===== MODE SWITCHING =====
@@ -514,8 +514,7 @@ function stopSpeech() {
 }
 
 function toggleSound() {
-    soundEnabled = !soundEnabled;
-    soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
+    soundEnabled = soundToggle.checked;
 
     // Save preference
     localStorage.setItem('shorterCatechismSoundEnabled', soundEnabled);
@@ -576,7 +575,7 @@ sidebarToggle.addEventListener('click', () => {
 });
 
 // General controls
-soundToggle.addEventListener('click', toggleSound);
+soundToggle.addEventListener('change', toggleSound);
 
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {

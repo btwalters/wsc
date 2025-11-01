@@ -3,7 +3,8 @@ let allQuestions = [];
 let questions = []; // Currently active questions (all or range)
 let currentIndex = 0;
 let isFlipped = false;
-let soundEnabled = true;
+let soundEnabled = true; // Default ON for children
+let autoSpeak = true; // Auto-speak on flip
 
 // DOM Elements
 const flashcard = document.getElementById('flashcard');
@@ -129,8 +130,8 @@ function flipCard() {
     isFlipped = !isFlipped;
     flashcard.classList.toggle('flipped');
 
-    // Speak answer when flipped to back, question when flipped to front
-    if (soundEnabled) {
+    // Auto-speak when flipped if enabled
+    if (autoSpeak && soundEnabled) {
         if (isFlipped) {
             speak(questions[currentIndex].answer);
         } else {
@@ -207,13 +208,24 @@ function restart() {
     displayQuestion();
 }
 
-// Toggle sound
+// Toggle auto-speak
 function toggleSound() {
-    soundEnabled = !soundEnabled;
-    soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
+    autoSpeak = soundToggle.checked;
 
-    if (!soundEnabled) {
+    // Save preference
+    localStorage.setItem('childrenAutoSpeak', autoSpeak);
+
+    if (!autoSpeak) {
         stopSpeech();
+    }
+}
+
+// Load saved auto-speak preference
+function loadAutoSpeakPreference() {
+    const saved = localStorage.getItem('childrenAutoSpeak');
+    if (saved !== null) {
+        autoSpeak = saved === 'true';
+        soundToggle.checked = autoSpeak;
     }
 }
 
@@ -251,7 +263,7 @@ nextBtn.addEventListener('click', nextQuestion);
 prevBtn.addEventListener('click', prevQuestion);
 randomBtn.addEventListener('click', randomQuestion);
 restartBtn.addEventListener('click', restart);
-soundToggle.addEventListener('click', toggleSound);
+soundToggle.addEventListener('change', toggleSound);
 
 // Range selection listeners
 allQuestionsBtn.addEventListener('click', selectAllQuestions);
@@ -315,4 +327,5 @@ function handleSwipe() {
 }
 
 // Initialize app
+loadAutoSpeakPreference();
 loadQuestions();
