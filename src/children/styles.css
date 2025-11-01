@@ -260,6 +260,28 @@ h1 {
     padding: 20px;
 }
 
+.play-icon {
+    font-size: 5rem;
+    color: #4CAF50;
+    opacity: 0.9;
+    margin: 20px 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    animation: pulse 2s infinite;
+}
+
+.card-back .play-icon {
+    color: white;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
 .tap-hint {
     font-size: 0.9rem;
     opacity: 0.6;

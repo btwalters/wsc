@@ -37,6 +37,8 @@ const fcFlipBtn = document.getElementById('fcFlipBtn');
 const fcRandomBtn = document.getElementById('fcRandomBtn');
 const fcShuffleBtn = document.getElementById('fcShuffleBtn');
 const fcRestartBtn = document.getElementById('fcRestartBtn');
+const playFrontBtn = document.getElementById('playFrontBtn');
+const playBackBtn = document.getElementById('playBackBtn');
 
 // Learning Mode Elements
 const searchInput = document.getElementById('searchInput');
@@ -228,11 +230,6 @@ function displayFlashcard() {
         if (isFlipped) {
             flipFlashcard();
         }
-
-        // Speak question if sound enabled
-        if (soundEnabled && currentMode === 'flashcard') {
-            speak(question.question);
-        }
     }
 
     saveState();
@@ -241,17 +238,6 @@ function displayFlashcard() {
 function flipFlashcard() {
     isFlipped = !isFlipped;
     flashcard.classList.toggle('flipped');
-
-    if (selectedQuestions.length === 0) return;
-
-    const questionId = selectedQuestions[currentFlashcardIndex];
-    const question = questions.find(q => q.id === questionId);
-
-    if (isFlipped && soundEnabled) {
-        speak(question.answer);
-    } else if (!isFlipped && soundEnabled) {
-        speak(question.question);
-    }
 }
 
 function nextFlashcard() {
@@ -562,6 +548,23 @@ fcPrevBtn.addEventListener('click', prevFlashcard);
 fcRandomBtn.addEventListener('click', randomFlashcard);
 fcShuffleBtn.addEventListener('click', shuffleFlashcards);
 fcRestartBtn.addEventListener('click', restartFlashcards);
+
+// Play button controls
+playFrontBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (selectedQuestions.length > 0) {
+        const question = questions.find(q => q.id === selectedQuestions[currentFlashcardIndex]);
+        if (question) speak(question.question);
+    }
+});
+
+playBackBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (selectedQuestions.length > 0) {
+        const question = questions.find(q => q.id === selectedQuestions[currentFlashcardIndex]);
+        if (question) speak(question.answer);
+    }
+});
 
 // Learning mode controls
 searchInput.addEventListener('input', (e) => {
