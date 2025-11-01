@@ -33,6 +33,19 @@
             color: white;
         }
 
+        .header-image {
+            margin-bottom: 30px;
+        }
+
+        .header-image img {
+            max-width: 600px;
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255,255,255,0.2);
+        }
+
         h1 {
             font-size: 3rem;
             margin-bottom: 15px;
@@ -118,6 +131,11 @@
         }
 
         @media (max-width: 768px) {
+            .header-image img {
+                max-width: 100%;
+                border-radius: 10px;
+            }
+
             h1 {
                 font-size: 2rem;
             }
@@ -139,6 +157,9 @@
 <body>
     <div class="container">
         <header>
+            <div class="header-image">
+                <img src="Westminster_Shorter_Catechism.jpg" alt="Westminster Shorter Catechism historic page" />
+            </div>
             <h1>Catechism Learning Center</h1>
             <p class="subtitle">Interactive tools for learning and memorizing catechism questions and answers</p>
         </header>
@@ -167,7 +188,8 @@
             <p style="font-size: 0.85rem; margin-top: 20px;">
                 Sources:
                 <a href="https://thewestminsterstandard.org/westminster-shorter-catechism/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline;">Shorter Catechism</a> •
-                <a href="https://reformed.org/historic-confessions/the-childrens-catechism/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline;">Children's Catechism</a>
+                <a href="https://reformed.org/historic-confessions/the-childrens-catechism/" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline;">Children's Catechism</a> •
+                <a href="https://archive.org/details/shortercatechis00west/page/n10/mode/1up" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: underline;">Image</a>
             </p>
         </footer>
     </div>
