@@ -339,6 +339,36 @@ function renderQuestionList(filter = '') {
     });
 }
 
+async function fetchScriptureText(reference) {
+    try {
+        // Use Bible API - https://bible-api.com (free, no auth required)
+        // This API supports various translations including ESV-like texts
+        const cleanRef = reference.trim();
+
+        // Try to fetch from bible-api.com
+        const response = await fetch(`https://bible-api.com/${encodeURIComponent(cleanRef)}?translation=web`);
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data.text) {
+                // Clean up the text (remove verse numbers and extra whitespace)
+                let scriptureText = data.text
+                    .replace(/\[\d+:\d+\]/g, '') // Remove [1:1] style verse numbers
+                    .replace(/\d+:\d+/g, '') // Remove 1:1 style verse numbers
+                    .trim();
+
+                return scriptureText;
+            }
+        }
+
+        // Fallback if API fails
+        return null;
+    } catch (error) {
+        console.error('Error fetching scripture:', error);
+        return null;
+    }
+}
+
 function displayLearningQuestion(questionId) {
     const question = questions.find(q => q.id === questionId);
     if (!question) return;
@@ -349,16 +379,30 @@ function displayLearningQuestion(questionId) {
     learningQuestion.textContent = question.question;
     learningAnswer.textContent = question.answer;
 
-    // Display references
+    // Display references with expandable scripture text
     if (question.references && question.references.length > 0) {
         referenceList.innerHTML = '';
         question.references.forEach((ref, index) => {
             const refItem = document.createElement('div');
-            refItem.className = 'reference-item';
+            refItem.className = 'reference-item expandable';
+            refItem.dataset.reference = ref.text;
+            refItem.dataset.expanded = 'false';
+
             refItem.innerHTML = `
-                <span class="reference-marker">${index + 1}</span>
-                ${ref.text}
+                <div class="reference-header">
+                    <span class="reference-marker">${index + 1}</span>
+                    <span class="reference-text">${ref.text}</span>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="reference-content hidden">
+                    <div class="loading">Loading scripture...</div>
+                </div>
             `;
+
+            // Add click handler to expand/collapse
+            const header = refItem.querySelector('.reference-header');
+            header.addEventListener('click', () => toggleReference(refItem, ref.text));
+
             referenceList.appendChild(refItem);
         });
         referencesSection.style.display = 'block';
@@ -387,6 +431,66 @@ function displayLearningQuestion(questionId) {
     }
 
     saveState();
+}
+
+async function toggleReference(refItem, reference) {
+    const content = refItem.querySelector('.reference-content');
+    const icon = refItem.querySelector('.expand-icon');
+    const isExpanded = refItem.dataset.expanded === 'true';
+
+    if (isExpanded) {
+        // Collapse
+        content.classList.add('hidden');
+        icon.textContent = '▼';
+        refItem.dataset.expanded = 'false';
+    } else {
+        // Expand
+        content.classList.remove('hidden');
+        icon.textContent = '▲';
+        refItem.dataset.expanded = 'true';
+
+        // Fetch scripture if not already loaded
+        if (content.querySelector('.loading')) {
+            // Show loading state
+            content.innerHTML = '<div class="loading">Loading scripture text...</div>';
+
+            try {
+                const scriptureText = await fetchScriptureText(reference);
+                const bibleGatewayUrl = `https://www.biblegateway.com/passage/?search=${encodeURIComponent(reference)}&version=ESV`;
+
+                if (scriptureText) {
+                    // Display the fetched scripture
+                    content.innerHTML = `
+                        <div class="scripture-text">${scriptureText}</div>
+                        <p class="scripture-attribution">
+                            <a href="${bibleGatewayUrl}" target="_blank" rel="noopener noreferrer">
+                                Read ${reference} (ESV) on Bible Gateway →
+                            </a>
+                        </p>
+                    `;
+                } else {
+                    // Fallback to link only
+                    content.innerHTML = `
+                        <p class="scripture-notice">
+                            <a href="${bibleGatewayUrl}" target="_blank" rel="noopener noreferrer">
+                                📖 Read ${reference} (ESV) on Bible Gateway
+                            </a>
+                        </p>
+                        <p class="scripture-note">Opens in a new tab</p>
+                    `;
+                }
+            } catch (error) {
+                const bibleGatewayUrl = `https://www.biblegateway.com/passage/?search=${encodeURIComponent(reference)}&version=ESV`;
+                content.innerHTML = `
+                    <p class="scripture-notice">
+                        <a href="${bibleGatewayUrl}" target="_blank" rel="noopener noreferrer">
+                            📖 Read ${reference} (ESV) on Bible Gateway
+                        </a>
+                    </p>
+                `;
+            }
+        }
+    }
 }
 
 // ===== TEXT-TO-SPEECH =====

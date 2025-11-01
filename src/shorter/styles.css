@@ -507,12 +507,122 @@ h1 {
 }
 
 .reference-item {
-    padding: 10px;
     background: white;
     border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.reference-item.expandable {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reference-item.expandable:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.reference-header {
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+}
+
+.reference-text {
+    flex-grow: 1;
     font-size: 1rem;
     color: #666;
-    cursor: help;
+}
+
+.expand-icon {
+    font-size: 0.8rem;
+    color: #009688;
+    transition: transform 0.3s ease;
+}
+
+.reference-content {
+    padding: 0 12px 12px 12px;
+    border-top: 1px solid #f0f0f0;
+    animation: slideDown 0.3s ease;
+}
+
+.reference-content.hidden {
+    display: none;
+}
+
+.scripture-text {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 3px solid #009688;
+    line-height: 1.8;
+    color: #333;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    font-family: 'Georgia', 'Merriweather', serif;
+}
+
+.scripture-attribution {
+    margin-top: 8px;
+    text-align: right;
+}
+
+.scripture-attribution a {
+    color: #009688;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.scripture-attribution a:hover {
+    text-decoration: underline;
+}
+
+.scripture-notice {
+    margin-bottom: 8px;
+}
+
+.scripture-notice a {
+    color: #009688;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.scripture-notice a:hover {
+    text-decoration: underline;
+}
+
+.scripture-note {
+    font-size: 0.85rem;
+    color: #999;
+    font-style: italic;
+}
+
+.scripture-error {
+    color: #d32f2f;
+    font-style: italic;
+}
+
+.loading {
+    color: #999;
+    font-style: italic;
+    padding: 10px 0;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .reference-marker {
