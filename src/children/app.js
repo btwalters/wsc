@@ -1,5 +1,6 @@
 // Children's Catechism Flashcard Game
-let questions = [];
+let allQuestions = [];
+let questions = []; // Currently active questions (all or range)
 let currentIndex = 0;
 let isFlipped = false;
 let soundEnabled = true;
@@ -18,12 +19,30 @@ const restartBtn = document.getElementById('restartBtn');
 const soundToggle = document.getElementById('soundToggle');
 const confettiContainer = document.getElementById('confetti');
 
+// Range selection elements
+const allQuestionsBtn = document.getElementById('allQuestionsBtn');
+const rangeSelectBtn = document.getElementById('rangeSelectBtn');
+const rangeModal = document.getElementById('rangeModal');
+const rangeFrom = document.getElementById('rangeFrom');
+const rangeTo = document.getElementById('rangeTo');
+const applyRangeBtn = document.getElementById('applyRangeBtn');
+const cancelRangeBtn = document.getElementById('cancelRangeBtn');
+
 // Load questions from JSON
 async function loadQuestions() {
     try {
         const response = await fetch('./data.json');
         const data = await response.json();
-        questions = data.questions;
+        allQuestions = data.questions;
+
+        // Load saved range or use all questions
+        const savedRange = localStorage.getItem('childrenCatechismRange');
+        if (savedRange) {
+            const range = JSON.parse(savedRange);
+            applyQuestionRange(range.from, range.to, false);
+        } else {
+            questions = [...allQuestions];
+        }
 
         // Load saved progress
         const savedIndex = localStorage.getItem('childrenCatechismIndex');
@@ -36,6 +55,46 @@ async function loadQuestions() {
         console.error('Error loading questions:', error);
         questionText.textContent = 'Error loading questions. Please refresh the page.';
     }
+}
+
+// Range selection functions
+function showRangeModal() {
+    rangeModal.classList.remove('hidden');
+}
+
+function hideRangeModal() {
+    rangeModal.classList.add('hidden');
+}
+
+function selectAllQuestions() {
+    questions = [...allQuestions];
+    currentIndex = 0;
+    localStorage.removeItem('childrenCatechismRange');
+    displayQuestion();
+}
+
+function applyQuestionRange(from, to, saveToStorage = true) {
+    if (from < 1 || to > allQuestions.length || from > to) {
+        alert(`Please enter a valid range (1-${allQuestions.length})`);
+        return;
+    }
+
+    // Filter questions by ID range
+    questions = allQuestions.filter(q => q.id >= from && q.id <= to);
+    currentIndex = 0;
+
+    if (saveToStorage) {
+        localStorage.setItem('childrenCatechismRange', JSON.stringify({ from, to }));
+    }
+
+    hideRangeModal();
+    displayQuestion();
+}
+
+function handleRangeApply() {
+    const from = parseInt(rangeFrom.value);
+    const to = parseInt(rangeTo.value);
+    applyQuestionRange(from, to);
 }
 
 // Display current question
@@ -89,12 +148,24 @@ function speak(text) {
         // Cancel any ongoing speech
         window.speechSynthesis.cancel();
 
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 0.85;  // Slightly slower for children
-        utterance.pitch = 1.1;  // Slightly higher pitch
-        utterance.volume = 1.0;
+        // Small delay to ensure cancel completes
+        setTimeout(() => {
+            try {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.85;  // Slightly slower for children
+                utterance.pitch = 1.1;  // Slightly higher pitch
+                utterance.volume = 1.0;
 
-        window.speechSynthesis.speak(utterance);
+                // Handle errors
+                utterance.onerror = (event) => {
+                    console.error('Speech synthesis error:', event);
+                };
+
+                window.speechSynthesis.speak(utterance);
+            } catch (error) {
+                console.error('Error speaking text:', error);
+            }
+        }, 100);
     }
 }
 
@@ -184,6 +255,12 @@ prevBtn.addEventListener('click', prevQuestion);
 randomBtn.addEventListener('click', randomQuestion);
 restartBtn.addEventListener('click', restart);
 soundToggle.addEventListener('click', toggleSound);
+
+// Range selection listeners
+allQuestionsBtn.addEventListener('click', selectAllQuestions);
+rangeSelectBtn.addEventListener('click', showRangeModal);
+applyRangeBtn.addEventListener('click', handleRangeApply);
+cancelRangeBtn.addEventListener('click', hideRangeModal);
 
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {

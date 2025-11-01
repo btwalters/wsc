@@ -102,6 +102,12 @@ function loadSavedState() {
     if (savedLearningQuestionId !== null) {
         currentLearningQuestionId = parseInt(savedLearningQuestionId);
     }
+
+    const savedSoundEnabled = localStorage.getItem('shorterCatechismSoundEnabled');
+    if (savedSoundEnabled !== null) {
+        soundEnabled = savedSoundEnabled === 'true';
+        soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
+    }
 }
 
 // ===== MODE SWITCHING =====
@@ -387,12 +393,27 @@ function displayLearningQuestion(questionId) {
 
 function speak(text) {
     if ('speechSynthesis' in window && soundEnabled) {
+        // Cancel any ongoing speech
         window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 0.9;
-        utterance.pitch = 1.0;
-        utterance.volume = 1.0;
-        window.speechSynthesis.speak(utterance);
+
+        // Small delay to ensure cancel completes
+        setTimeout(() => {
+            try {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1.0;
+                utterance.volume = 1.0;
+
+                // Handle errors
+                utterance.onerror = (event) => {
+                    console.error('Speech synthesis error:', event);
+                };
+
+                window.speechSynthesis.speak(utterance);
+            } catch (error) {
+                console.error('Error speaking text:', error);
+            }
+        }, 100);
     }
 }
 
@@ -405,6 +426,9 @@ function stopSpeech() {
 function toggleSound() {
     soundEnabled = !soundEnabled;
     soundToggle.textContent = soundEnabled ? '🔊' : '🔇';
+
+    // Save preference
+    localStorage.setItem('shorterCatechismSoundEnabled', soundEnabled);
 
     if (!soundEnabled) {
         stopSpeech();

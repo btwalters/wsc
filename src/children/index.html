@@ -18,7 +18,32 @@
         <!-- Progress Bar -->
         <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
-            <div class="progress-text" id="progressText">Question 1 of 145</div>
+            <div class="progress-text" id="progressText">Question 1 of 144</div>
+        </div>
+
+        <!-- Question Selection -->
+        <div class="selection-controls">
+            <button class="selection-btn" id="allQuestionsBtn">All Questions</button>
+            <button class="selection-btn" id="rangeSelectBtn">Select Range</button>
+        </div>
+
+        <!-- Range Modal -->
+        <div class="modal hidden" id="rangeModal">
+            <div class="modal-content">
+                <h3>Select Question Range</h3>
+                <div class="range-inputs">
+                    <label>
+                        From: <input type="number" id="rangeFrom" min="1" max="144" value="1">
+                    </label>
+                    <label>
+                        To: <input type="number" id="rangeTo" min="1" max="144" value="144">
+                    </label>
+                </div>
+                <div class="modal-actions">
+                    <button class="modal-btn" id="applyRangeBtn">Apply</button>
+                    <button class="modal-btn cancel" id="cancelRangeBtn">Cancel</button>
+                </div>
+            </div>
         </div>
 
         <!-- Card Container -->

@@ -59,7 +59,7 @@ h1 {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 20px;
     padding: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     position: relative;
 }
 
@@ -77,6 +77,124 @@ h1 {
     font-weight: bold;
     margin-top: 10px;
     font-size: 1.1rem;
+}
+
+/* Selection Controls */
+.selection-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.selection-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.selection-btn:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.modal-content h3 {
+    color: #4CAF50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.range-inputs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.range-inputs label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    font-weight: 600;
+    color: #333;
+}
+
+.range-inputs input {
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.range-inputs input:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #4CAF50;
+    color: white;
+}
+
+.modal-btn:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+}
+
+.modal-btn.cancel {
+    background: #999;
+}
+
+.modal-btn.cancel:hover {
+    background: #777;
 }
 
 /* Card Container */
