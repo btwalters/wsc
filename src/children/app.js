@@ -229,8 +229,9 @@ function loadAutoSpeakPreference() {
     const saved = localStorage.getItem('childrenAutoSpeak');
     if (saved !== null) {
         autoSpeak = saved === 'true';
-        soundToggle.checked = autoSpeak;
     }
+    // Always sync the toggle with the current autoSpeak value
+    soundToggle.checked = autoSpeak;
 }
 
 // Confetti celebration
