@@ -6,6 +6,7 @@ let currentLearningQuestionId = 1;
 let isFlipped = false;
 let soundEnabled = false; // Default OFF for adults
 let currentMode = 'flashcard';
+let speechInitialized = false; // Track if speech has been initialized
 
 // DOM Elements
 const flashcardModeBtn = document.getElementById('flashcardModeBtn');
@@ -480,31 +481,54 @@ async function toggleReference(refItem, reference) {
 
 // ===== TEXT-TO-SPEECH =====
 
+// Initialize speech synthesis (required for desktop browsers)
+function initializeSpeech() {
+    if ('speechSynthesis' in window && !speechInitialized) {
+        // Speak an empty string to initialize the speech engine
+        const utterance = new SpeechSynthesisUtterance(' ');
+        utterance.volume = 0.01; // Very quiet but not silent
+        utterance.rate = 10; // Very fast
+        window.speechSynthesis.speak(utterance);
+        speechInitialized = true;
+    }
+}
+
 // Manual speak function (always works, for play buttons)
 function speakAlways(text) {
     if ('speechSynthesis' in window) {
-        // Cancel any ongoing speech
-        window.speechSynthesis.cancel();
-
-        // Small delay to ensure cancel completes
-        setTimeout(() => {
-            try {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 1.1;
-                utterance.pitch = 1.0;
-                utterance.volume = 1.0;
-
-                // Handle errors
-                utterance.onerror = (event) => {
-                    console.error('Speech synthesis error:', event);
-                };
-
-                window.speechSynthesis.speak(utterance);
-            } catch (error) {
-                console.error('Error speaking text:', error);
-            }
-        }, 100);
+        // Initialize speech if not already done
+        if (!speechInitialized) {
+            initializeSpeech();
+            // Wait a bit longer for initialization to complete
+            setTimeout(() => speakNow(text), 200);
+        } else {
+            speakNow(text);
+        }
     }
+}
+
+function speakNow(text) {
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+
+    // Small delay to ensure cancel completes
+    setTimeout(() => {
+        try {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 1.1;
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+
+            // Handle errors
+            utterance.onerror = (event) => {
+                console.error('Speech synthesis error:', event);
+            };
+
+            window.speechSynthesis.speak(utterance);
+        } catch (error) {
+            console.error('Error speaking text:', error);
+        }
+    }, 100);
 }
 
 // Auto-speak function (respects soundEnabled toggle)
