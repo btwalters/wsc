@@ -152,8 +152,8 @@ function speak(text) {
         setTimeout(() => {
             try {
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.rate = 0.85;  // Slightly slower for children
-                utterance.pitch = 1.1;  // Slightly higher pitch
+                utterance.rate = 0.85;
+                utterance.pitch = 1.1;
                 utterance.volume = 1.0;
 
                 // Handle errors
